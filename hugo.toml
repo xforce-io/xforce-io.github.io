@@ -1,0 +1,50 @@
+baseURL = "https://xforce-io.github.io/"
+languageCode = "zh-CN"
+defaultContentLanguage = "zh"
+title = "许鹏的技术博客"
+theme = "PaperMod"
+enableRobotsTXT = true
+
+[pagination]
+  pagerSize = 10
+
+[params]
+  description = "记录工程实践、技术思考与学习笔记。"
+  defaultTheme = "auto"
+  ShowReadingTime = true
+  ShowShareButtons = true
+  ShowPostNavLinks = true
+  ShowCodeCopyButtons = true
+  comments = true
+
+[params.giscus]
+  enabled = true
+  repo = "xforce-io/xforce-io.github.io"
+  repoID = "R_kgDOT11TPQ"
+  category = "General"
+  categoryID = "DIC_kwDOT11TPc4DDLxa"
+
+# 在 Umami Cloud 创建网站后填写 websiteID，即可启用匿名访问统计。
+[params.umami]
+  websiteID = ""
+
+[[menu.main]]
+  identifier = "archives"
+  name = "归档"
+  url = "/archives/"
+  weight = 10
+
+[[menu.main]]
+  identifier = "search"
+  name = "搜索"
+  url = "/search/"
+  weight = 20
+
+[[menu.main]]
+  identifier = "tags"
+  name = "标签"
+  url = "/tags/"
+  weight = 30
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
