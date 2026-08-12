@@ -47,11 +47,11 @@ $$
 
 其中：
 
-- \(s_t\)：系统当前状态；
-- \(a_t\)：策略选择的动作；
-- \(u_t\)：外部输入与约束；
-- \(\xi_t\)：随机扰动和未完全观测的影响；
-- \(\theta\)：需要由真实数据校准的世界模型参数。
+- \\(s_t\\)：系统当前状态；
+- \\(a_t\\)：策略选择的动作；
+- \\(u_t\\)：外部输入与约束；
+- \\(\xi_t\\)：随机扰动和未完全观测的影响；
+- \\(\theta\\)：需要由真实数据校准的世界模型参数。
 
 世界模型既可以是显式规则、状态机、离散事件模型或微分方程，也可以包含统计模型和神经网络。关键不在实现形式，而在于它表达的是**系统动力学与因果约束**，不是“应该选择什么动作”。
 
@@ -69,7 +69,7 @@ $$
 
 ### 2.3 策略
 
-策略 \(\pi\) 根据当前状态选择动作：
+策略 \\(\pi\\) 根据当前状态选择动作：
 
 $$
 a_t = \pi(s_t)
@@ -92,14 +92,7 @@ $$
 完整仿真系统不是单独的世界模型，而是：
 
 $$
-\text{Simulator}
-=
-\text{Engine}
-+ M_{\theta}
-+ s_0
-+ \pi
-+ \xi
-+ J
+\text{Simulator} = \text{Engine} + M_{\theta} + s_0 + \pi + \xi + J
 $$
 
 即：
@@ -122,7 +115,7 @@ $$
 
 ### 3.1 学习对象
 
-Learning 更新的是世界模型参数 \(\theta\)，而不是候选策略本身。
+Learning 更新的是世界模型参数 \\(\theta\\)，而不是候选策略本身。
 
 真实数据可抽象为：
 
@@ -132,17 +125,13 @@ $$
 
 其中：
 
-- \(x_i\) 包含初始状态、外部条件和实际动作；
-- \(y_i\) 包含真实状态转移、轨迹和最终结果。
+- \\(x_i\\) 包含初始状态、外部条件和实际动作；
+- \\(y_i\\) 包含真实状态转移、轨迹和最终结果。
 
 Learning 寻找一组参数，使模型在相同输入下尽可能复现真实输出：
 
 $$
-\theta_{t+1}
-=
-\arg\min_{\theta}
-L_{\text{reality}}
-\bigl(M_{\theta}(x), y\bigr)
+\theta_{t+1} = \arg\min_{\theta} L_{\text{reality}} \bigl(M_{\theta}(x), y\bigr)
 $$
 
 ### 3.2 学习目标
@@ -189,16 +178,10 @@ Learning 优化的是**现实拟合目标**，例如：
 
 ### 4.1 搜索对象
 
-当世界模型达到预设可信度后，固定当前参数快照 \(\theta_{t+1}\)，在策略空间 \(\Pi\) 中搜索：
+当世界模型达到预设可信度后，固定当前参数快照 \\(\theta_{t+1}\\)，在策略空间 \\(\Pi\\) 中搜索：
 
 $$
-\pi_t^*
-=
-\arg\max_{\pi \in \Pi}
-\mathbb{E}
-\left[
-J\bigl(\operatorname{Sim}(M_{\theta_{t+1}}, \pi, \xi)\bigr)
-\right]
+\pi_t^* = \arg\max_{\pi \in \Pi} \mathbb{E}\left[J\bigl(\operatorname{Sim}(M_{\theta_{t+1}}, \pi, \xi)\bigr)\right]
 $$
 
 Searching 优化的是**任务或控制目标**，而不是现实拟合误差。
@@ -232,13 +215,7 @@ Searching 优化的是**任务或控制目标**，而不是现实拟合误差。
 因此优化目标可扩展为：
 
 $$
-\pi^*
-=
-\arg\max_{\pi}
-\left(
-\mathbb{E}[J]
-- \lambda\,\operatorname{Risk}(J)
-\right)
+\pi^* = \arg\max_{\pi} \left(\mathbb{E}[J] - \lambda \operatorname{Risk}(J)\right)
 $$
 
 即不仅追求平均表现，也惩罚方差、尾部损失或违反硬约束的风险。
@@ -262,8 +239,8 @@ $$
 
 | 过程 | 核心问题 | 目标函数 |
 |---|---|---|
-| Learning | 模型是否足够像现实？ | 最小化现实拟合误差 \(L_{\text{reality}}\) |
-| Searching | 哪个策略的结果更好？ | 最大化目标效用 \(J\) |
+| Learning | 模型是否足够像现实？ | 最小化现实拟合误差 \\(L_{\text{reality}}\\) |
+| Searching | 哪个策略的结果更好？ | 最大化目标效用 \\(J\\) |
 
 这两个目标不能混为一谈：
 
@@ -298,13 +275,7 @@ $$
 完整闭环为：
 
 $$
-D_t
-\xrightarrow{\text{Learning}}
-\theta_{t+1}
-\xrightarrow{\text{Searching}}
-\pi_t^*
-\xrightarrow{\text{Deploy}}
-D_{t+1}
+D_t \xrightarrow{\text{Learning}} \theta_{t+1} \xrightarrow{\text{Searching}} \pi_t^* \xrightarrow{\text{Deploy}} D_{t+1}
 $$
 
 ```mermaid
@@ -408,7 +379,7 @@ Search 产生候选并比较结果；Learning 更新可复用模型。二者可�
 1. 定义状态、动作、外部输入和结果数据结构。
 2. 建立可执行世界模型与参数快照机制。
 3. 准备真实轨迹，并划分拟合集与验证集。
-4. 定义现实拟合损失 \(L_{\text{reality}}\)。
+4. 定义现实拟合损失 \\(L_{\text{reality}}\\)。
 5. 校准模型，并设置可信度门禁。
 6. 定义候选策略空间、目标函数和硬约束。
 7. 在多个初始状态和扰动下搜索策略。
