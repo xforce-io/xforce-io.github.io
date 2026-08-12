@@ -1,7 +1,7 @@
 baseURL = "https://xforce-io.github.io/"
 languageCode = "zh-CN"
 defaultContentLanguage = "zh"
-title = "许鹏的技术博客"
+title = "思考和漫游"
 theme = "PaperMod"
 enableRobotsTXT = true
 
