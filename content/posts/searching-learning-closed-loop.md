@@ -41,9 +41,9 @@ summary: "区分世界模型、仿真引擎与策略，构建由真实观测校�
 
 可以写成：
 
-\[
+$$
 s_{t+1} \sim M_{\theta}(s_t, a_t, u_t, \xi_t)
-\]
+$$
 
 其中：
 
@@ -71,9 +71,9 @@ s_{t+1} \sim M_{\theta}(s_t, a_t, u_t, \xi_t)
 
 策略 \(\pi\) 根据当前状态选择动作：
 
-\[
+$$
 a_t = \pi(s_t)
-\]
+$$
 
 策略可以是规则组合、参数配置、优化器输出、规划器，也可以是学习得到的策略网络。Searching 的目标是比较或构造候选策略，而不是修改世界事实。
 
@@ -81,9 +81,9 @@ a_t = \pi(s_t)
 
 评价器把一段仿真轨迹映射为目标值：
 
-\[
+$$
 J(\tau) = J(s_0, a_0, s_1, a_1, \ldots, s_T)
-\]
+$$
 
 目标可以是单指标，也可以是带约束的多目标函数，例如收益、时延、成本、资源使用、可靠性与风险。
 
@@ -91,7 +91,7 @@ J(\tau) = J(s_0, a_0, s_1, a_1, \ldots, s_T)
 
 完整仿真系统不是单独的世界模型，而是：
 
-\[
+$$
 \text{Simulator}
 =
 \text{Engine}
@@ -100,7 +100,7 @@ J(\tau) = J(s_0, a_0, s_1, a_1, \ldots, s_T)
 + \pi
 + \xi
 + J
-\]
+$$
 
 即：
 
@@ -126,9 +126,9 @@ Learning 更新的是世界模型参数 \(\theta\)，而不是候选策略本身
 
 真实数据可抽象为：
 
-\[
+$$
 D_t = \{(x_i, y_i)\}_{i=1}^{n}
-\]
+$$
 
 其中：
 
@@ -137,13 +137,13 @@ D_t = \{(x_i, y_i)\}_{i=1}^{n}
 
 Learning 寻找一组参数，使模型在相同输入下尽可能复现真实输出：
 
-\[
+$$
 \theta_{t+1}
 =
 \arg\min_{\theta}
 L_{\text{reality}}
 \bigl(M_{\theta}(x), y\bigr)
-\]
+$$
 
 ### 3.2 学习目标
 
@@ -191,7 +191,7 @@ Learning 优化的是**现实拟合目标**，例如：
 
 当世界模型达到预设可信度后，固定当前参数快照 \(\theta_{t+1}\)，在策略空间 \(\Pi\) 中搜索：
 
-\[
+$$
 \pi_t^*
 =
 \arg\max_{\pi \in \Pi}
@@ -199,7 +199,7 @@ Learning 优化的是**现实拟合目标**，例如：
 \left[
 J\bigl(\operatorname{Sim}(M_{\theta_{t+1}}, \pi, \xi)\bigr)
 \right]
-\]
+$$
 
 Searching 优化的是**任务或控制目标**，而不是现实拟合误差。
 
@@ -231,7 +231,7 @@ Searching 优化的是**任务或控制目标**，而不是现实拟合误差。
 
 因此优化目标可扩展为：
 
-\[
+$$
 \pi^*
 =
 \arg\max_{\pi}
@@ -239,7 +239,7 @@ Searching 优化的是**任务或控制目标**，而不是现实拟合误差。
 \mathbb{E}[J]
 - \lambda\,\operatorname{Risk}(J)
 \right)
-\]
+$$
 
 即不仅追求平均表现，也惩罚方差、尾部损失或违反硬约束的风险。
 
@@ -285,9 +285,9 @@ Searching 优化的是**任务或控制目标**，而不是现实拟合误差。
 
 部署后得到新的真实数据：
 
-\[
+$$
 D_{t+1} = \operatorname{Reality}(\pi_t^*)
-\]
+$$
 
 这些数据同时用于：
 
@@ -297,7 +297,7 @@ D_{t+1} = \operatorname{Reality}(\pi_t^*)
 
 完整闭环为：
 
-\[
+$$
 D_t
 \xrightarrow{\text{Learning}}
 \theta_{t+1}
@@ -305,7 +305,7 @@ D_t
 \pi_t^*
 \xrightarrow{\text{Deploy}}
 D_{t+1}
-\]
+$$
 
 ```mermaid
 flowchart LR
